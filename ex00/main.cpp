@@ -6,7 +6,7 @@
 #include <map>
 #include <cstdlib>
 
-int ConvertIntraFile_toMap(std::map<unsigned int, double> &map)
+int ConvertIntraFile_toMap(char *fileName, std::map<unsigned int, double> &map)
 {
     unsigned int    date;
     unsigned int    tmp_date = 0;
@@ -14,7 +14,7 @@ int ConvertIntraFile_toMap(std::map<unsigned int, double> &map)
 
     date = 0;
     (void)map;
-    std::ifstream   IntraFile("message.txt");
+    std::ifstream   IntraFile(fileName);
     if (!IntraFile.is_open())
     {
         std::cout << "Error opening the intra file." << std::endl;
@@ -136,7 +136,7 @@ int format_test(std::string &line, std::map<unsigned int, double> &map)
     return 0;
 }
 
-int inputFile(char *fileName, std::map<unsigned int, double> &intraFile)
+int inputFile(std::map<unsigned int, double> &intraFile)
 {
     std::ifstream file("file");
     if (!file.is_open())
@@ -161,6 +161,7 @@ int main(int ac, char **av)
         std::cout << "enter a file name please" << std::endl;
         return 1;
     }
-    ConvertIntraFile_toMap(intraFile);
-    inputFile(av[1], intraFile);
+    if (ConvertIntraFile_toMap(av[1], intraFile))
+        return 1;
+    inputFile(intraFile);
 }

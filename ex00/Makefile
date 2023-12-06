@@ -4,7 +4,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 EXECUTION = btc
 
-CPPFLAGS =-fsanitize=address -g #-Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
+CPPFLAGS =-Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 
 CC = c++
 
