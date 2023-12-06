@@ -41,26 +41,32 @@ int fill_stacks(char **av, std::stack<int> &nmbs_stk)
 
     while (av[i])
     {
-        std::string argv(av[i]);
-        if (argv.size() == 1 && isdigit(argv[0]))
+        char *split = strtok(av[i], " ");
+        while(split != NULL)
         {
-            nmb = strtod(av[i], NULL);
-            if (!(nmb < 10 && nmb >= 0))
+            std::string argv(split);
+            std::cout << "\n" << split << "    " << argv <<"\n" <<std::endl;
+            if (argv.size() == 1 && isdigit(argv[0]))
+            {
+                nmb = strtod(split, NULL);
+                if (!(nmb < 10 && nmb >= 0))
+                    return 1;
+                nmbs_stk.push(nmb);
+                split = strtok(NULL, " ");
+            }
+            else if (argv.size() == 1 && is_arithmetic_operation(argv[0]))
+            {
+                if (calcul_expression(nmbs_stk, argv[0]))
+                    return 1;
+                split = strtok(NULL, " ");
+            }
+            else
+            {
+                std::cout << "invalid input argement" << std::endl;
                 return 1;
-            nmbs_stk.push(nmb);
-            i++;
+            }
         }
-        else if (argv.size() == 1 && is_arithmetic_operation(argv[0]))
-        {
-            if (calcul_expression(nmbs_stk, argv[0]))
-                return 1;
-            i++;
-        }
-        else
-        {
-            std::cout << "invalid input argement" << std::endl;
-            return 1;
-        }
+        i++;
     }
     if (nmbs_stk.size() != 1)
     {
