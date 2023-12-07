@@ -1,4 +1,4 @@
-SRCS = main.cpp #RPN.cpp
+SRCS = main.cpp RPN.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

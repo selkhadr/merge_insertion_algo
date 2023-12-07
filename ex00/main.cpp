@@ -1,19 +1,12 @@
 #include "BitcoinExchange.hpp"
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <map>
-#include <cstdlib>
-
-int ConvertIntraFile_toMap(char *fileName, std::map<unsigned int, double> &map)
+int BitcoinExchange::ConvertIntraFile_toMap(char *fileName)
 {
     unsigned int    date;
     unsigned int    tmp_date = 0;
     double          value;
 
     date = 0;
-    (void)map;
     std::ifstream   IntraFile(fileName);
     if (!IntraFile.is_open())
     {
@@ -44,7 +37,7 @@ int ConvertIntraFile_toMap(char *fileName, std::map<unsigned int, double> &map)
     return  0;
 }
 
-int    DateValueFormat(std::string &line)
+int    BitcoinExchange::DateValueFormat(std::string &line)
 {
     if (line[10] != ' ' || line[11] != '|' || line[12] != ' ')
     {
@@ -54,9 +47,9 @@ int    DateValueFormat(std::string &line)
     return 0;
 }
 
-int    only_digit(std::string &line)
+int    BitcoinExchange::only_digit(std::string &line)
 {
-    if(line[4] != '-' || line[7] != '-')
+    if(line[4] != '-' || line[7] != '-' || line.size() <= 13)
     {
         std::cout << "Error: bad input " << line << std::endl;
         return 1;
@@ -73,11 +66,13 @@ int    only_digit(std::string &line)
     }
     i = 13;
     int dot_status = 0;
+    if (line[i] == '+' || line[i]  == '-')
+        i++;
     while (i < line.size())
     {
-        if (!isdigit(line[i]) && dot_status)
+        if ((!isdigit(line[i]) && line[i] != '.' && line[i] != ' ') || (dot_status && line[i] == '.'))
         {
-            std::cout << "Error: bad input => " << line << std::endl;
+            std::cout << " Error: bad input => " << line << std::endl;
             return 1;
         }
         if (line[i] == '.')
@@ -87,7 +82,7 @@ int    only_digit(std::string &line)
     return 0;
 }
 
-int format_test(std::string &line, std::map<unsigned int, double> &map)
+int BitcoinExchange::format_test(std::string &line)
 {
     if (DateValueFormat(line))
         return 1;
@@ -97,6 +92,7 @@ int format_test(std::string &line, std::map<unsigned int, double> &map)
     unsigned int    date;
     unsigned int    tmp_date = 0;
     double          value;
+
     date = 0;
     tmp_date = strtod( line.substr(0, 4).c_str(), nullptr );
     tmp_date *= 10000;
@@ -116,12 +112,11 @@ int format_test(std::string &line, std::map<unsigned int, double> &map)
         std::cout << "Error: not a positive number." << std::endl;
         return 1;
     }
-    if (value > INT_MAX)
+    if (value > 1000)
     {
         std::cout << "Error: too large a number" << std::endl;
         return 1;
     }
-
 
     std::map<unsigned int, double>::iterator it = map.begin();
     std::map<unsigned int, double>::iterator ite = map.begin();
@@ -136,7 +131,7 @@ int format_test(std::string &line, std::map<unsigned int, double> &map)
     return 0;
 }
 
-int inputFile(std::map<unsigned int, double> &intraFile)
+int BitcoinExchange::inputFile(void)
 {
     std::ifstream file("file");
     if (!file.is_open())
@@ -146,22 +141,27 @@ int inputFile(std::map<unsigned int, double> &intraFile)
     }
     std::string line;
     getline(file, line);
+    if (line != "date | value")
+    {
+        std::cout << "Error: bad input " << line << std::endl;
+        return 1;
+    }
     while (getline(file, line))
     {
-        format_test(line, intraFile);
+        format_test(line);
     }
     return 0;
 }
 
 int main(int ac, char **av)
 {
-    std::map<unsigned int, double> intraFile;
+    BitcoinExchange bitcoin;
     if (ac != 2)
     {
         std::cout << "enter a file name please" << std::endl;
         return 1;
     }
-    if (ConvertIntraFile_toMap(av[1], intraFile))
+    if (bitcoin.ConvertIntraFile_toMap(av[1]))
         return 1;
-    inputFile(intraFile);
+    bitcoin.inputFile();
 }
