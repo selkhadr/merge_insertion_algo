@@ -1,13 +1,13 @@
 #include "RPN.hpp"
 
-int is_arithmetic_operation(char c)
+int RPN::is_arithmetic_operation(char c)
 {
     if ( c == '*' || c == '-' || c == '+' || c == '/')
         return 1;
     return 0;
 }
 
-int calcul_expression(std::stack<int> &nmbs_stk, char arithmetic_ope)
+int RPN::calcul_expression(char arithmetic_ope)
 {
     int nmb1;
     int nmb2;
@@ -34,7 +34,7 @@ int calcul_expression(std::stack<int> &nmbs_stk, char arithmetic_ope)
     return 0;
 }
 
-int fill_stacks(char **av, std::stack<int> &nmbs_stk)
+int RPN::fill_stacks(char **av)
 {
     int i = 1;
     double nmb;
@@ -45,7 +45,6 @@ int fill_stacks(char **av, std::stack<int> &nmbs_stk)
         while(split != NULL)
         {
             std::string argv(split);
-            std::cout << "\n" << split << "    " << argv <<"\n" <<std::endl;
             if (argv.size() == 1 && isdigit(argv[0]))
             {
                 nmb = strtod(split, NULL);
@@ -56,7 +55,7 @@ int fill_stacks(char **av, std::stack<int> &nmbs_stk)
             }
             else if (argv.size() == 1 && is_arithmetic_operation(argv[0]))
             {
-                if (calcul_expression(nmbs_stk, argv[0]))
+                if (calcul_expression(argv[0]))
                     return 1;
                 split = strtok(NULL, " ");
             }
@@ -79,10 +78,10 @@ int fill_stacks(char **av, std::stack<int> &nmbs_stk)
 
 int main(int ac, char **av)
 {
-    std::stack<int> nmbs_stk;
+    RPN rpn;
 
     if (ac == 1)
         return 1;
-    if (fill_stacks(av, nmbs_stk))
+    if (rpn.fill_stacks(av))
         return 1;
 }
