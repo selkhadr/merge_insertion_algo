@@ -15,7 +15,12 @@ public:
     PmergeMe(const PmergeMe &obj);
     PmergeMe &operator=(const PmergeMe &obj);
     int fill_vector(int ac, char **av);
-    // int insertion(int ac, char **av);
+    int insertion(int ac, char **av);
+
+
+    //delete_me
+    void    print_vect(std::vector<std::vector<int> > vect);
 };
+
 
 #endif
