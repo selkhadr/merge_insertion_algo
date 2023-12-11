@@ -3,34 +3,32 @@
 
 int main()
 {
-    std::vector<int> vector1;
-    vector1.push_back(1);
-    vector1.push_back(2);
-    vector1.push_back(3);
+    std::vector<int> originalVector;
+    originalVector.push_back(10);
+    // originalVector.push_back(2);
+    // originalVector.push_back(3);
+    // originalVector.push_back(4);
+    // originalVector.push_back(5);
+    // originalVector.push_back(6);
+    // originalVector.push_back(7);
+    // originalVector.push_back(8);
+    // originalVector.push_back(9);
 
-    std::vector<int> vector2;
-    vector2.push_back(11);
-    vector2.push_back(22);
-    vector2.push_back(33);
+    std::cout << originalVector.size() << std::endl;
+    std::cout << originalVector[originalVector.size() - 1] << std::endl;
 
-    std::vector<int> vector3;
-    vector3.push_back(11);
-    vector3.push_back(22);
-    vector3.push_back(33);
+    // Specify the range using iterators
+    // std::vector<int>::iterator startIterator = originalVector.begin() + 2;  // Starting at index 2
+    // std::vector<int>::iterator endIterator = originalVector.begin() + 5;    // Ending at index 4 (exclusive)
 
-    std::vector<std::vector<int> > vect;
-    vect.push_back(vector1);
-    vect.push_back(vector2);
-    vect.push_back(vector3);
-    std::vector<std::vector<int> >::iterator it = vect.begin();
-    int i = 0;
-    while(it != vect.end())
-    {
-        if (it +1 != vect.end())
-            std::cout << vect[i][0] << std::endl;
-        i += 2;
-        it += 2;
-    }
-    // std::cout << vect[i][0] << std::endl;
+    // // Create a new vector with the specified subsequence
+    // std::vector<int> subVector(startIterator, endIterator);
+
+    // // Output the elements of the subsequence
+    // std::cout << "Subsequence: ";
+    // for (std::vector<int>::iterator it = subVector.begin(); it != subVector.end(); ++it) {
+    //     std::cout << *it << " ";
+    // }
+
     return 0;
 }

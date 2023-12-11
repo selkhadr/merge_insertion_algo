@@ -5,5 +5,6 @@ int main(int ac, char **av)
     PmergeMe pmergeMe;
 
     pmergeMe.fill_vector(ac, av);
-    pmergeMe.insertion(ac, av);
+    pmergeMe.merge(ac, av);
+    pmergeMe.insertion();
 }
