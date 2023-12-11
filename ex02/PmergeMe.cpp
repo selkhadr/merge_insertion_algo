@@ -122,7 +122,7 @@ int PmergeMe::insertion(void)
             i += 2;
         }
     }
-    if (rest[rest.size() - 1].size() == main_chain[0].size())
+    if (rest.size() > 0 &&  rest[rest.size() - 1].size() == main_chain[0].size())
     {
         pend.push_back(rest[rest.size() - 1]);
         rest.pop_back();
