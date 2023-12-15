@@ -4,11 +4,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 EXECUTION = PmergeMe
 
-<<<<<<< HEAD
-CPPFLAGS =  -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
-=======
-CPPFLAGS =  -g -Wall -Werror -Wextra -std=c++98 -fsanitize=address
->>>>>>> be9c63b72f4488ea384d17ba402a118785602b18
+CPPFLAGS =  -fsanitize=address -g# -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 
 CC = c++
 
