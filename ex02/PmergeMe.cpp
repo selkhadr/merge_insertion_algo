@@ -92,7 +92,6 @@ void PmergeMe::creat_combination(void)
     combination.erase(combination.begin(), combination.end());
     while (a)
     {
-            std::cout << "hna j = " << j << std::endl;
         i = jacobsthal[j] - 1;
         while (i > jacobsthal[j - 1] - 1)
         {
@@ -111,11 +110,16 @@ void PmergeMe::insert_pend(std::vector<std::vector<int> >::iterator begin, std::
 {
     std::vector<std::vector<int> >::iterator    middle;
 
-    middle = begin + (end - begin) / 2;
+    middle = begin + ((end - begin) / 2);
     if (begin > end)
         return ;
     if (middle[0][middle[0].size() - 1] > value[value.size() - 1])
     {
+        if (middle == main_chain.begin())
+        {
+            main_chain.insert(middle, value);
+            return ;
+        }
         middle--;
         if (value[value.size() - 1] > middle[0][middle[0].size() - 1])
         {
@@ -128,7 +132,14 @@ void PmergeMe::insert_pend(std::vector<std::vector<int> >::iterator begin, std::
     }
     else if (middle[0][middle[0].size() - 1] < value[value.size() - 1])
     {
+        if (value[value.size() - 1] > main_chain[main_chain.size() - 1][main_chain[main_chain.size() - 1].size() - 1])
+        {
+            main_chain.insert(main_chain.begin() + main_chain.size(), value);
+            return ;
+        }
         middle++;
+        if (middle == main_chain.end())
+            return ;
         if (value[value.size() - 1] < middle[0][middle[0].size() - 1])
         {
             main_chain.insert(middle, value);
@@ -142,7 +153,7 @@ void PmergeMe::insert_pend(std::vector<std::vector<int> >::iterator begin, std::
 
 int PmergeMe::insertion(void)
 {
-    main_chain.reserve(100);
+    main_chain.reserve(10000);
     std::vector<std::vector<int> > tmp;
     //creat tmp_vector
     size_t i = 0;
@@ -166,7 +177,7 @@ int PmergeMe::insertion(void)
         {
             std::vector<int> subVector(tmp[i].begin(), tmp[i].end());
             main_chain.push_back(subVector);
-            pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
+            // pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
             i += 2;
         }
     }
@@ -185,28 +196,20 @@ int PmergeMe::insertion(void)
     if (rest.size() > 0 &&  rest[rest.size() - 1].size() == main_chain[0].size())
     {
         pend.first.push_back(rest[rest.size() - 1]);
-        pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
+        // pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
         rest.pop_back();
     }
     // insert pend inside main_chain
     size_t j = 0;
     creat_combination();
-    if (pend.first[0][pend.first[0].size() - 1] <= main_chain[0][main_chain[0].size() - 1])
-    {
+    if (pend.first.size() >= 1 &&  pend.first[0][pend.first[0].size() - 1] <= main_chain[0][main_chain[0].size() - 1])
         main_chain.insert(main_chain.begin() , pend.first[0]);
-    }
-    if (pend.first[0][pend.first[0].size() - 1] >= main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
-    {
+    if (pend.first.size() >= 1 &&  pend.first[0][pend.first[0].size() - 1] >= main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
         main_chain.insert(main_chain.begin() + main_chain.size(), pend.first[0]);
-    }
     while (j < combination.size())
     {
         if (combination[j] < pend.first.size())
-        {
-            std::vector<std::vector<int> >::iterator it = pend.second[combination[j]];
-            std::cout << *it << std::endl;
-            insert_pend(main_chain.begin(), pend.second[combination[j]], pend.first[combination[j]]);
-        }
+            insert_pend(main_chain.begin(), main_chain.end(), pend.first[combination[j]]);
         j++;
     }
     vect = main_chain;

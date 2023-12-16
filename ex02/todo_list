@@ -39,3 +39,10 @@ it segfault in odd number of agruments
 // std::vector<int> subVector(tmp[i].begin(), tmp[i].end());
 //             pend.push_back(subVector);
 fix this line u don't need subvector
+
+/2
+delete this if condition "if (pend.first.size() >= 1 &&  pend.first[0][pend.first[0].size() - 1] >= main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
+    {
+        std::cout << "\t\t\t\t\tanchof wach adkhal hna" << std::endl;
+        main_chain.insert(main_chain.begin() + main_chain.size(), pend.first[0]);
+    }"
