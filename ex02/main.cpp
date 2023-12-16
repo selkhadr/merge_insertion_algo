@@ -12,4 +12,5 @@ int main(int ac, char **av)
     pmergeMe.fill_vector(ac, av);
     pmergeMe.merge(ac, av);
     pmergeMe.insertion();
+    pmergeMe.print_vect(pmergeMe.main_chain);
 }

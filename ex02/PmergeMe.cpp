@@ -177,7 +177,7 @@ int PmergeMe::insertion(void)
         {
             std::vector<int> subVector(tmp[i].begin(), tmp[i].end());
             main_chain.push_back(subVector);
-            // pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
+            pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
             i += 2;
         }
     }
@@ -196,7 +196,7 @@ int PmergeMe::insertion(void)
     if (rest.size() > 0 &&  rest[rest.size() - 1].size() == main_chain[0].size())
     {
         pend.first.push_back(rest[rest.size() - 1]);
-        // pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
+        pend.second.push_back(main_chain.begin() + (main_chain.size() - 1));
         rest.pop_back();
     }
     // insert pend inside main_chain
