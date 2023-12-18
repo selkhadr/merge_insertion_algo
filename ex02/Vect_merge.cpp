@@ -84,6 +84,8 @@ int PmergeVect::merge(void)
                     tmp_vect.push_back(vect[i]);
                 }
             }
+            else
+                rest.push_back(vect[i]);
         }
         else
             rest.push_back(vect[i]);

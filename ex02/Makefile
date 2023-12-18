@@ -1,10 +1,10 @@
-SRCS = main.cpp PmergeMe.cpp
+SRCS = main.cpp PmergeVect.cpp  Vect_insertion.cpp Vect_merge.cpp 
 
 OBJS = $(SRCS:.cpp=.o)
 
 EXECUTION = PmergeMe
 
-CPPFLAGS =  -fsanitize=address -g# -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
+CPPFLAGS =  -fsanitize=address -g -Wall -Werror -Wextra -std=c++98
 
 CC = c++
 
