@@ -1,0 +1,22 @@
+void    PmergeList::print_list(std::list<std::list<int> > list, std::string string)
+{
+    int i = 0;
+    std::list<std::list<int> >::iterator it = list.begin();
+
+    std::cout << string << ": ";
+    while (it != list.end())
+    {
+        std::list<int>::iterator ite = it->begin();
+        while (ite != it->end())
+        {
+            std::cout << *ite << " ";
+            ite++;
+        }
+        i++;
+        it++;
+    }
+    std::cout << std::endl;
+}
+why it->begin() u use ->
+2/ 3 number as argumemnty
+3/ understan time

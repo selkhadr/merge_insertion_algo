@@ -9,13 +9,13 @@
 class PmergeVect
 {
 private:
+public:
     std::vector<std::vector<int> >				main_chain;
     std::vector<std::vector<int> >				pend;
     std::vector<std::vector<int> >				vect;
     std::vector<std::vector<int> >				rest;
     std::vector<std::vector<int> >				tmp;
     std::vector<int>							combination;
-public:
     PmergeVect();
     ~PmergeVect();
     PmergeVect(const PmergeVect &obj);
