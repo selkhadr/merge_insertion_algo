@@ -29,11 +29,10 @@ void PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std
     std::vector<std::vector<int> >::iterator    middle;
 
     middle = begin + ((end - begin) / 2);
-    if (begin > end)
-        return ;
+    // if (begin > end)
+    //     return ;
     if (middle[0][middle[0].size() - 1] > value[value.size() - 1])
     {
-        std::cout << "mama" << std::endl;
         if (middle == main_chain.begin())
         {
             main_chain.insert(middle, value);
@@ -51,11 +50,9 @@ void PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std
     }
     else if (middle[0][middle[0].size() - 1] < value[value.size() - 1])
     {
-        std::cout << "baba" << std::endl;
         middle++;
         if (value[value.size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
         {
-            std::cout  << "rita" << std::endl;
             main_chain.insert(main_chain.begin() + main_chain.size(), value);
             return ;
         }
@@ -128,6 +125,8 @@ void	PmergeVect::creat_pend()
     }
 }
 
+/*insert mn lwal hta lkhir*/
+
 void	PmergeVect::insert_pend_inside_main_chain()
 {
 	size_t j = 0;
@@ -135,12 +134,10 @@ void	PmergeVect::insert_pend_inside_main_chain()
     creat_combination();
     if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] < main_chain[0][main_chain[0].size() - 1])
     {
-        std::cout << "meriem " << pend[0][pend[0].size() - 1] << std::endl;
         main_chain.insert(main_chain.begin() , pend[0]);
     }
     if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
     {
-        std::cout  << "arwa" << std::endl;
         main_chain.insert(main_chain.begin() + main_chain.size(), pend[0]);
     }
     if (main_chain.size() == 2)
@@ -167,7 +164,6 @@ int	PmergeVect::insertion(void)
         print_vect(main_chain, "after");
         return (0);
     }
-    std::cout << "\n\n\n" << std::endl;
     insertion();
     return (0);
 }
