@@ -6,16 +6,18 @@
 # include <cstdlib>
 # include <ctime>
 
+
 class PmergeVect
 {
 private:
 public:
-    std::vector<std::vector<int> >				main_chain;
-    std::vector<std::vector<int> >				pend;
-    std::vector<std::vector<int> >				vect;
-    std::vector<std::vector<int> >				rest;
-    std::vector<std::vector<int> >				tmp;
-    std::vector<int>							combination;
+    std::vector<std::vector<int> >				                        main_chain;
+    std::vector<std::vector<int> >				                        pend;
+    std::vector<std::vector<std::vector<int> >::iterator>				pend_iterator;
+    std::vector<std::vector<int> >				                        vect;
+    std::vector<std::vector<int> >				                        rest;
+    std::vector<std::vector<int> >				                        tmp;
+    std::vector<int>							                        combination;
     PmergeVect();
     ~PmergeVect();
     PmergeVect(const PmergeVect &obj);

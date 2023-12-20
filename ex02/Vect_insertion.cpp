@@ -1,5 +1,7 @@
 #include "PmergeVect.hpp"
 
+extern int global_counter;
+
 void PmergeVect::creat_combination(void)
 {
     long int	jacobsthal[36] = {1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203, 5592405, 11184811, 22369621, 44739243, 89478485, 178956971, 357913941, 715827883, 1431655765, 2863311531, 5726623061, 11453246123};
@@ -29,18 +31,21 @@ void PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std
     std::vector<std::vector<int> >::iterator    middle;
 
     middle = begin + ((end - begin) / 2);
-    // if (begin > end)
-    //     return ;
+    if (begin > end)
+        return ;
     if (middle[0][middle[0].size() - 1] > value[value.size() - 1])
     {
+        global_counter++;
         if (middle == main_chain.begin())
         {
+            global_counter++;
             main_chain.insert(middle, value);
             return ;
         }
         middle--;
         if (value[value.size() - 1] > middle[0][middle[0].size() - 1])
         {
+            global_counter++;
             main_chain.insert(middle + 1, value);
             return ;
         }
@@ -53,15 +58,18 @@ void PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std
         middle++;
         if (value[value.size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
         {
+            global_counter++;
             main_chain.insert(main_chain.begin() + main_chain.size(), value);
             return ;
         }
         if (middle == main_chain.end())
         {
+            global_counter++;
             return ;
         }
         if (value[value.size() - 1] < middle[0][middle[0].size() - 1])
         {
+            global_counter++;
             main_chain.insert(middle, value);
             return ;
         }
@@ -90,14 +98,20 @@ void	PmergeVect::creat_main_chain()
 {
 	size_t i = 0;
 
+    pend_iterator.erase(pend_iterator.begin(), pend_iterator.end());
+    pend_iterator.reserve(10000);
 	if (tmp.size() == 1 || tmp.size() == 2)
+    {
+        global_counter++;
         main_chain = tmp;
+    }
     else
     {
         i = 1;
         while (i < tmp.size())
         {
             main_chain.push_back(tmp[i]);
+            pend_iterator.push_back(main_chain.end());
             i += 2;
         }
     }
@@ -112,6 +126,7 @@ void	PmergeVect::creat_pend()
     pend.reserve(10000);
     if (tmp.size() > 2)
     {
+        global_counter++;
         while (i < tmp.size())
         {
             pend.push_back(tmp[i]);
@@ -120,7 +135,9 @@ void	PmergeVect::creat_pend()
     }
     if (rest.size() > 0 &&  rest[rest.size() - 1].size() == main_chain[0].size())
     {
+        global_counter++;
         pend.push_back(rest[rest.size() - 1]);
+        pend_iterator.push_back(main_chain.begin() + main_chain.size());
         rest.pop_back();
     }
 }
@@ -134,18 +151,26 @@ void	PmergeVect::insert_pend_inside_main_chain()
     creat_combination();
     if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] < main_chain[0][main_chain[0].size() - 1])
     {
+        global_counter++;
         main_chain.insert(main_chain.begin() , pend[0]);
     }
     if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
     {
+        global_counter++;
         main_chain.insert(main_chain.begin() + main_chain.size(), pend[0]);
     }
-    if (main_chain.size() == 2)
+    if (main_chain.size() == 2 && pend.size() >= 1)
+    {
+        global_counter++;
         main_chain.insert(main_chain.begin() + 1, pend[0]);
+    }
     while (j < combination.size())
     {
         if (combination[j] < static_cast<int>(pend.size()))
+        {
+            global_counter++;
             insert_pend(main_chain.begin(), main_chain.end(), pend[combination[j]]);
+        }
         j++;
     }
     vect = main_chain;
@@ -161,6 +186,7 @@ int	PmergeVect::insertion(void)
     insert_pend_inside_main_chain();
     if (main_chain.size() > 1 &&  main_chain[0].size() == 1)
     {
+        global_counter++;
         print_vect(main_chain, "after");
         return (0);
     }

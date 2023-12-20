@@ -1,5 +1,7 @@
 #include "PmergeVect.hpp"
 
+extern int global_counter;
+
 int check_arg(char *str)
 {
     std::string string(str);
@@ -44,6 +46,7 @@ void    PmergeVect::print_vect(std::vector<std::vector<int> > vect, std::string 
     std::vector<std::vector<int> >::iterator it = vect.begin();
 
     std::cout << string << ": ";
+    std::cout << vect.size() << std::endl;
     while (it != vect.end())
     {
         std::vector<int>::iterator ite = vect[i].begin();
@@ -69,12 +72,15 @@ int PmergeVect::merge(void)
     {
         if (i + 1 < vect.size())
         {
+            global_counter++;
             size1 = vect[i].size() - 1;
             size2 = vect[i + 1].size() - 1;
             if (size1 == size2)
             {
+                global_counter++;
                 if (vect[i][size1] > vect[i + 1][size2] && size1 == size2)
                 {
+                    global_counter++;
                     vect[i + 1].insert(vect[i + 1].end(), vect[i].begin(), vect[i].end());
                     tmp_vect.push_back(vect[i + 1]);
                 }

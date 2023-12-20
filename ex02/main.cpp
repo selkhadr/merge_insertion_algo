@@ -1,5 +1,7 @@
 #include "PmergeVect.hpp"
 
+int global_counter;
+
 int PmergeVector(int ac, char **av)
 {
     PmergeVect PmergeVect;
@@ -27,5 +29,6 @@ int main(int ac, char **av)
 {
     if (PmergeVector(ac, av))
         return 1;
+    std::cout << global_counter << std::endl;
     return 0;
 }
