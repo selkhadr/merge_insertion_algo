@@ -20,17 +20,6 @@ int PmergeVector(int ac, char **av)
     // Display the elapsed time
     std::cout << "Elapsed time: " << elapsedTime << " seconds" << std::endl;
     return 0;
-<<<<<<< HEAD
-}
-
-
-int main(int ac, char **av)
-{
-    if (PmergeVector(ac, av))
-        return 1;
-    return 0;
-=======
->>>>>>> 6f7006556eecf8ffddb064a0ee1559c365e3b4b2
 }
 
 
