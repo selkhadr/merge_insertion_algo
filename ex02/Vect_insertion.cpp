@@ -32,7 +32,10 @@ void PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std
 
     middle = begin + ((end - begin) / 2);
     if (begin > end)
+    {
+        std::cout << "\n\n\nchofi wach aydkhal lhad khiti\n\n\n" << std::endl;
         return ;
+    }
     if (middle[0][middle[0].size() - 1] > value[value.size() - 1])
     {
         global_counter++;
@@ -98,8 +101,8 @@ void	PmergeVect::creat_main_chain()
 {
 	size_t i = 0;
 
-    pend_iterator.erase(pend_iterator.begin(), pend_iterator.end());
-    pend_iterator.reserve(10000);
+    main_iterator.erase(main_iterator.begin(), main_iterator.end());
+    main_iterator.reserve(10000);
 	if (tmp.size() == 1 || tmp.size() == 2)
     {
         global_counter++;
@@ -111,7 +114,7 @@ void	PmergeVect::creat_main_chain()
         while (i < tmp.size())
         {
             main_chain.push_back(tmp[i]);
-            pend_iterator.push_back(main_chain.end());
+            main_iterator.push_back(main_chain.size());
             i += 2;
         }
     }
@@ -137,12 +140,34 @@ void	PmergeVect::creat_pend()
     {
         global_counter++;
         pend.push_back(rest[rest.size() - 1]);
-        pend_iterator.push_back(main_chain.begin() + main_chain.size());
+        main_iterator.push_back(main_chain.size());
         rest.pop_back();
     }
 }
 
 /*insert mn lwal hta lkhir*/
+
+void	PmergeVect::increment_indexes(size_t start)
+{
+    size_t i = start;
+    std::cout << "\n\n\nmain_iterator\n\n" << std::endl;
+    while (i < main_iterator.size())
+    {
+        main_iterator[i]++;
+        i++;
+    }
+}
+
+void    PmergeVect::print_main_iter()
+{
+    size_t i = 0;
+
+    while (i < main_iterator.size())
+    {
+        std::cout << main_iterator[i];
+        i++;
+    }
+}
 
 void	PmergeVect::insert_pend_inside_main_chain()
 {
@@ -151,6 +176,7 @@ void	PmergeVect::insert_pend_inside_main_chain()
     creat_combination();
     if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] < main_chain[0][main_chain[0].size() - 1])
     {
+        increment_indexes(0);
         global_counter++;
         main_chain.insert(main_chain.begin() , pend[0]);
     }
@@ -158,18 +184,23 @@ void	PmergeVect::insert_pend_inside_main_chain()
     {
         global_counter++;
         main_chain.insert(main_chain.begin() + main_chain.size(), pend[0]);
+        main_iterator.push_back(main_chain.size());
     }
     if (main_chain.size() == 2 && pend.size() >= 1)
     {
         global_counter++;
         main_chain.insert(main_chain.begin() + 1, pend[0]);
+        increment_indexes(1);
     }
     while (j < combination.size())
     {
         if (combination[j] < static_cast<int>(pend.size()))
         {
             global_counter++;
-            insert_pend(main_chain.begin(), main_chain.end(), pend[combination[j]]);
+            print_main_iter();
+            insert_pend(main_chain.begin(),main_chain.begin() + main_iterator[combination[j]] + 1, pend[combination[j]]);
+            increment_indexes(combination[j]);
+            // insert_pend(main_chain.begin(), main_chain.end(), pend[combination[j]]);
         }
         j++;
     }
