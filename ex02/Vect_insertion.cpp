@@ -26,7 +26,7 @@ void PmergeVect::creat_combination(void)
     }
 }
 
-void PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std::vector<std::vector<int> >::iterator end, std::vector<int> value)
+void    PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std::vector<std::vector<int> >::iterator end, std::vector<int> value)
 {
     std::vector<std::vector<int> >::iterator    middle;
 
@@ -111,6 +111,8 @@ void	PmergeVect::creat_main_chain()
     else
     {
         i = 1;
+		main_chain.push_back(tmp[0]);
+        main_iterator.push_back(main_chain.size());
         while (i < tmp.size())
         {
             main_chain.push_back(tmp[i]);
@@ -150,7 +152,6 @@ void	PmergeVect::creat_pend()
 void	PmergeVect::increment_indexes(size_t start)
 {
     size_t i = start;
-    std::cout << "\n\n\nmain_iterator\n\n" << std::endl;
     while (i < main_iterator.size())
     {
         main_iterator[i]++;
@@ -158,7 +159,7 @@ void	PmergeVect::increment_indexes(size_t start)
     }
 }
 
-void    PmergeVect::print_main_iter()
+void	PmergeVect::print_main_iter()
 {
     size_t i = 0;
 
@@ -169,41 +170,51 @@ void    PmergeVect::print_main_iter()
     }
 }
 
+bool	comp(std::vector<int> v1, std::vector<int> v2)
+{
+    if (v1.back() < v2.back())
+        return true ;
+    return false ;
+}
+
 void	PmergeVect::insert_pend_inside_main_chain()
 {
-	size_t j = 0;
+	size_t j = 1;
 
     creat_combination();
-    if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] < main_chain[0][main_chain[0].size() - 1])
+    // if (pend.size() == 1 &&  pend[0][pend[0].size() - 1] < main_chain[0][main_chain[0].size() - 1])
+    // {
+    //     // increment_indexes(0);
+    //     global_counter++;
+    //     main_chain.insert(main_chain.begin() , pend[0]);
+    // }
+    // if (pend.size() == 1 &&  pend[0][pend[0].size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
+    // {
+    //     global_counter++;
+    //     main_chain.insert(main_chain.begin() + main_chain.size(), pend[0]);
+    //     // main_iterator.push_back(main_chain.size());
+    // }
+    if (pend.size() == 1)
     {
-        increment_indexes(0);
-        global_counter++;
-        main_chain.insert(main_chain.begin() , pend[0]);
+    	main_chain.insert(lower_bound(main_chain.begin(),main_chain.end(), pend[0], comp), pend[0]);
+    //     global_counter++;
+    //     main_chain.insert(main_chain.begin() + 1, pend[0]);
+    //     // increment_indexes(1);
     }
-    if (pend.size() >= 1 &&  pend[0][pend[0].size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
-    {
-        global_counter++;
-        main_chain.insert(main_chain.begin() + main_chain.size(), pend[0]);
-        main_iterator.push_back(main_chain.size());
-    }
-    if (main_chain.size() == 2 && pend.size() >= 1)
-    {
-        global_counter++;
-        main_chain.insert(main_chain.begin() + 1, pend[0]);
-        increment_indexes(1);
-    }
-    while (j < combination.size())
-    {
-        if (combination[j] < static_cast<int>(pend.size()))
-        {
-            global_counter++;
-            print_main_iter();
-            insert_pend(main_chain.begin(),main_chain.begin() + main_iterator[combination[j]] + 1, pend[combination[j]]);
-            increment_indexes(combination[j]);
-            // insert_pend(main_chain.begin(), main_chain.end(), pend[combination[j]]);
-        }
-        j++;
-    }
+    else
+	{
+		while (j < pend.size())
+    	{
+    	    // if (combination[j] < static_cast<int>(pend.size()))
+    	    // {
+    	        global_counter++;
+    	       main_chain.insert(lower_bound(main_chain.begin(),main_chain.begin() + main_iterator[j], pend[j], comp), pend[j]);
+    	        increment_indexes(j);
+    	        // insert_pend(main_chain.begin(), main_chain.end(), pend[combination[j]]);
+    	    // }
+    	    j++;
+   		}
+	}
     vect = main_chain;
 }
 
