@@ -2,63 +2,6 @@
 
 extern int global_counter;
 
-void    PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std::vector<std::vector<int> >::iterator end, std::vector<int> value)
-{
-    std::vector<std::vector<int> >::iterator    middle;
-
-    middle = begin + ((end - begin) / 2);
-    if (begin > end)
-    {
-        global_counter++;
-        std::cout << "\n\n\nchofi wach aydkhal lhad khiti\n\n\n" << std::endl;
-        return ;
-    }
-    if (middle[0][middle[0].size() - 1] > value[value.size() - 1])
-    {
-        global_counter++;
-        if (middle == main_chain.begin())
-        {
-            global_counter++;
-            main_chain.insert(middle, value);
-            return ;
-        }
-        middle--;
-        if (value[value.size() - 1] > middle[0][middle[0].size() - 1])
-        {
-            global_counter++;
-            main_chain.insert(middle + 1, value);
-            return ;
-        }
-        middle++;
-        end = middle - 1;
-        insert_pend(begin, end, value);
-    }
-    else if (middle[0][middle[0].size() - 1] < value[value.size() - 1])
-    {
-        middle++;
-        if (value[value.size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
-        {
-            global_counter++;
-            main_chain.insert(main_chain.begin() + main_chain.size(), value);
-            return ;
-        }
-        if (middle == main_chain.end())
-        {
-            global_counter++;
-            return ;
-        }
-        if (value[value.size() - 1] < middle[0][middle[0].size() - 1])
-        {
-            global_counter++;
-            main_chain.insert(middle, value);
-            return ;
-        }
-        middle--;
-        begin = middle + 1;
-        insert_pend(begin, end, value);
-    }
-}
-
 void	PmergeVect::creat_tmp_vector()
 {
 	size_t i = 0;

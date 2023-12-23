@@ -1,6 +1,8 @@
 
 SRCS = main.cpp PmergeVect.cpp Vect_insertion.cpp Vect_merge.cpp 
 
+HEADER = PmergeVect.hpp
+
 OBJS = $(SRCS:.cpp=.o)
 
 EXECUTION = PmergeMe
@@ -14,7 +16,7 @@ all:$(EXECUTION)
 %.o:	%.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
-$(EXECUTION):	$(OBJS)
+$(EXECUTION):	$(OBJS) $(HEADER)
 	$(CC) $(CPPFLAGS) $(OBJS) -o $(EXECUTION)
 
 clean:
