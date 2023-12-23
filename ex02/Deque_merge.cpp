@@ -36,7 +36,7 @@ int PmergeDeque::fill_deque(int ac, char **av)
         deque.push_back(tmp);
         i++;
     }
-    print_deque(deque, "befor");
+    // print_deque(deque, "befor");
     return 0;
 }
 
@@ -46,7 +46,6 @@ void    PmergeDeque::print_deque(std::deque<std::deque<int> > deque, std::string
     std::deque<std::deque<int> >::iterator it = deque.begin();
 
     std::cout << string << ": ";
-    std::cout << deque.size() << std::endl;
     while (it != deque.end())
     {
         std::deque<int>::iterator ite = deque[i].begin();

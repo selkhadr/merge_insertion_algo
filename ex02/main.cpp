@@ -6,7 +6,7 @@ int global_counter;
 int PmergeDeque_fnct(int ac, char **av)
 {
     PmergeDeque pmergeDeque;
- 
+
     clock_t startTime = clock();
     if (ac <= 2)
     {
@@ -21,7 +21,7 @@ int PmergeDeque_fnct(int ac, char **av)
     double elapsedTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
 
     // Display the elapsed time
-    std::cout << "Elapsed time: " << elapsedTime << " seconds" << std::endl;
+    std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque : " << elapsedTime << " seconds" << std::endl;
     return 0;
 }
 
@@ -43,7 +43,7 @@ int PmergeVector_fnct(int ac, char **av)
     double elapsedTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
 
     // Display the elapsed time
-    std::cout << "Elapsed time: " << elapsedTime << " seconds" << std::endl;
+    std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector : " << elapsedTime << " seconds" << std::endl;
     return 0;
 }
 

@@ -22,3 +22,4 @@ why it->begin() u use ->
 2/ 3 number as argumemnty
 3/ understan time
 4/-Makefiles do not account for changes in header files 
+5/delete gobal_counter

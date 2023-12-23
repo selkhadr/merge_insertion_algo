@@ -46,7 +46,6 @@ void    PmergeVect::print_vect(std::vector<std::vector<int> > vect, std::string 
     std::vector<std::vector<int> >::iterator it = vect.begin();
 
     std::cout << string << ": ";
-    std::cout << vect.size() << std::endl;
     while (it != vect.end())
     {
         std::vector<int>::iterator ite = vect[i].begin();

@@ -121,7 +121,7 @@ int	PmergeDeque::insertion(void)
     if (main_chain.size() > 1 &&  main_chain[0].size() == 1)
     {
         global_counter++;
-        print_deque(main_chain, "after");
+        // print_deque(main_chain, "after");
         return (0);
     }
     insertion();
