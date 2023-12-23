@@ -1,28 +1,28 @@
-#include "PmergeVect.hpp"
+#include "PmergeDeque.hpp"
 
 extern int global_counter;
 
-void	PmergeVect::creat_tmp_vector()
+void	PmergeDeque::creat_tmp_deque()
 {
 	size_t i = 0;
 
 	tmp.erase(tmp.begin(), tmp.end());
-    while (i < vect.size())
+    while (i < deque.size())
     {
-        std::vector<int> subVector(vect[i].begin(), vect[i].begin() + vect[i].size() / 2);
-        tmp.push_back(subVector);
-        subVector.assign(vect[i].begin() + vect[i].size() / 2, vect[i].end());
-        tmp.push_back(subVector);
+        std::deque<int> subdeque(deque[i].begin(), deque[i].begin() + deque[i].size() / 2);
+        tmp.push_back(subdeque);
+        subdeque.assign(deque[i].begin() + deque[i].size() / 2, deque[i].end());
+        tmp.push_back(subdeque);
         i++;
     }
 }
 
-void	PmergeVect::creat_main_chain()
+void	PmergeDeque::creat_main_chain()
 {
 	size_t i = 0;
 
     main_iterator.erase(main_iterator.begin(), main_iterator.end());
-    main_iterator.reserve(10000);
+    // main_iterator.reserve(10000);
 	if (tmp.size() == 1 || tmp.size() == 2)
     {
         global_counter++;
@@ -42,13 +42,13 @@ void	PmergeVect::creat_main_chain()
     }
 }
 
-void	PmergeVect::creat_pend()
+void	PmergeDeque::creat_pend()
 {
 	size_t i = 0;
 
 	i = 0;
     pend.erase(pend.begin(), pend.end());
-    pend.reserve(10000);
+    // pend.reserve(10000);
     if (tmp.size() > 2)
     {
         global_counter++;
@@ -69,7 +69,7 @@ void	PmergeVect::creat_pend()
 
 /*insert mn lwal hta lkhir*/
 
-void	PmergeVect::increment_indexes(size_t start)
+void	PmergeDeque::increment_indexes(size_t start)
 {
     size_t i = start;
     while (i < main_iterator.size())
@@ -79,7 +79,7 @@ void	PmergeVect::increment_indexes(size_t start)
     }
 }
 
-static bool	comp(std::vector<int> v1, std::vector<int> v2)
+bool	comp(std::deque<int> v1, std::deque<int> v2)
 {
     if (v1.back() < v2.back())
     {
@@ -89,7 +89,7 @@ static bool	comp(std::vector<int> v1, std::vector<int> v2)
     return false ;
 }
 
-void	PmergeVect::insert_pend_inside_main_chain()
+void	PmergeDeque::insert_pend_inside_main_chain()
 {
 	size_t j = 1;
 
@@ -107,21 +107,21 @@ void	PmergeVect::insert_pend_inside_main_chain()
     	    j++;
    		}
 	}
-    vect = main_chain;
+    deque = main_chain;
 }
 
-int	PmergeVect::insertion(void)
+int	PmergeDeque::insertion(void)
 {
     main_chain.erase(main_chain.begin(), main_chain.end());
-    main_chain.reserve(10000);
-	creat_tmp_vector();
+    // main_chain.reserve(10000);
+	creat_tmp_deque();
     creat_main_chain();
 	creat_pend();
     insert_pend_inside_main_chain();
     if (main_chain.size() > 1 &&  main_chain[0].size() == 1)
     {
         global_counter++;
-        print_vect(main_chain, "after");
+        print_deque(main_chain, "after");
         return (0);
     }
     insertion();

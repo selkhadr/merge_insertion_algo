@@ -1,12 +1,12 @@
-void    PmergeList::print_list(std::list<std::list<int> > list, std::string string)
+void    PmergeDeque::print_Deque(std::Deque<std::Deque<int> > Deque, std::string string)
 {
     int i = 0;
-    std::list<std::list<int> >::iterator it = list.begin();
+    std::Deque<std::Deque<int> >::iterator it = Deque.begin();
 
     std::cout << string << ": ";
-    while (it != list.end())
+    while (it != Deque.end())
     {
-        std::list<int>::iterator ite = it->begin();
+        std::Deque<int>::iterator ite = it->begin();
         while (ite != it->end())
         {
             std::cout << *ite << " ";

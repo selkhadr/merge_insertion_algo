@@ -26,14 +26,12 @@ public:
     int		fill_vector(int ac, char **av);
     int		merge(void);
     int		insertion(void);
-    void	insert_pend(std::vector<std::vector<int> >::iterator begin, std::vector<std::vector<int> >::iterator end, std::vector<int> value);
     void	print_vect(std::vector<std::vector<int> > vect, std::string string);
     void	creat_tmp_vector();
     void	creat_main_chain();
     void	creat_pend();
     void	insert_pend_inside_main_chain();
 	void	increment_indexes(size_t start);
-    void    print_main_iter();
 };
 
 #endif

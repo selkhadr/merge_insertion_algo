@@ -1,5 +1,6 @@
 
-SRCS = main.cpp PmergeVect.cpp Vect_insertion.cpp Vect_merge.cpp 
+SRCS = main.cpp PmergeVect.cpp Vect_insertion.cpp \
+	Vect_merge.cpp Deque_insertion.cpp Deque_merge.cpp PmergeDeque.cpp
 
 HEADER = PmergeVect.hpp
 
