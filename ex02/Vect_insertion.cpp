@@ -2,30 +2,6 @@
 
 extern int global_counter;
 
-void PmergeVect::creat_combination(void)
-{
-    long int	jacobsthal[36] = {1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203, 5592405, 11184811, 22369621, 44739243, 89478485, 178956971, 357913941, 715827883, 1431655765, 2863311531, 5726623061, 11453246123};
-    long		int i = 0;
-    long		int j = 1;
-    int			a = 1;
-
-    combination.erase(combination.begin(), combination.end());
-    while (a)
-    {
-        i = jacobsthal[j] - 1;
-        while (i > jacobsthal[j - 1] - 1)
-        {
-            if (i == static_cast<long int>(pend.size()))
-                a = 0;
-            combination.push_back(i);
-            i--;
-        }
-        if (jacobsthal[j] > static_cast<long int>(pend.size()) && jacobsthal[j + 1] > static_cast<int>(pend.size()))
-            return ;
-        j++;
-    }
-}
-
 void    PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, std::vector<std::vector<int> >::iterator end, std::vector<int> value)
 {
     std::vector<std::vector<int> >::iterator    middle;
@@ -33,6 +9,7 @@ void    PmergeVect::insert_pend(std::vector<std::vector<int> >::iterator begin, 
     middle = begin + ((end - begin) / 2);
     if (begin > end)
     {
+        global_counter++;
         std::cout << "\n\n\nchofi wach aydkhal lhad khiti\n\n\n" << std::endl;
         return ;
     }
@@ -159,21 +136,13 @@ void	PmergeVect::increment_indexes(size_t start)
     }
 }
 
-void	PmergeVect::print_main_iter()
-{
-    size_t i = 0;
-
-    while (i < main_iterator.size())
-    {
-        std::cout << main_iterator[i];
-        i++;
-    }
-}
-
 bool	comp(std::vector<int> v1, std::vector<int> v2)
 {
     if (v1.back() < v2.back())
+    {
+        global_counter++;
         return true ;
+    }
     return false ;
 }
 
@@ -181,37 +150,17 @@ void	PmergeVect::insert_pend_inside_main_chain()
 {
 	size_t j = 1;
 
-    creat_combination();
-    // if (pend.size() == 1 &&  pend[0][pend[0].size() - 1] < main_chain[0][main_chain[0].size() - 1])
-    // {
-    //     // increment_indexes(0);
-    //     global_counter++;
-    //     main_chain.insert(main_chain.begin() , pend[0]);
-    // }
-    // if (pend.size() == 1 &&  pend[0][pend[0].size() - 1] > main_chain[main_chain.size() - 1][main_chain[0].size() - 1])
-    // {
-    //     global_counter++;
-    //     main_chain.insert(main_chain.begin() + main_chain.size(), pend[0]);
-    //     // main_iterator.push_back(main_chain.size());
-    // }
     if (pend.size() == 1)
     {
     	main_chain.insert(lower_bound(main_chain.begin(),main_chain.end(), pend[0], comp), pend[0]);
-    //     global_counter++;
-    //     main_chain.insert(main_chain.begin() + 1, pend[0]);
-    //     // increment_indexes(1);
+        global_counter++;
     }
     else
 	{
 		while (j < pend.size())
     	{
-    	    // if (combination[j] < static_cast<int>(pend.size()))
-    	    // {
-    	        global_counter++;
-    	       main_chain.insert(lower_bound(main_chain.begin(),main_chain.begin() + main_iterator[j], pend[j], comp), pend[j]);
-    	        increment_indexes(j);
-    	        // insert_pend(main_chain.begin(), main_chain.end(), pend[combination[j]]);
-    	    // }
+			main_chain.insert(lower_bound(main_chain.begin(), main_chain.begin() + main_iterator[j], pend[j], comp), pend[j]);
+			increment_indexes(j);
     	    j++;
    		}
 	}

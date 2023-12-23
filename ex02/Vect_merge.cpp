@@ -99,7 +99,10 @@ int PmergeVect::merge(void)
     }
     vect = tmp_vect;
     if (vect.size() == 1)
+    {
+        global_counter++;
         return (0);
+    }
     merge();
     return 0;
 }
